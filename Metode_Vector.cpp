@@ -1,18 +1,19 @@
 #include "Clasa_Vector.h"
 
-
-int Vector::lungime()
+template <class X>
+int Vector<X>::lungime()
 {
     return n;
 }
 
-Vector::Vector(int nr)
+template <class X>
+Vector<X>::Vector(int nr)
 {
     n = 0;
     maxim = nr;
     try
     {
-        cifra = new int[maxim];
+        elem = new X[maxim];
     }
     catch(std::bad_alloc &exp)
     {
@@ -20,69 +21,75 @@ Vector::Vector(int nr)
     }
 }
 
-Vector::~Vector()
+template <class X>
+Vector<X>::~Vector()
 {
-    delete []cifra;
+    delete []elem;
     n = 0;
 }
 
-Vector::Vector(const Vector &v)
+template <class X>
+Vector<X>::Vector(const Vector<X> &v)
 {
     n = v.n;
     maxim = v.maxim;
     try
     {
-        cifra = new int[maxim];
+        elem = new X[maxim];
     }
     catch(std::bad_alloc &exp)
     {
         std::cout<<"Eroare in copy-constructor."<<exp.what();
     }
     for(int i=0;i<n;i++)
-        cifra[i] = v.cifra[i];
+        elem[i] = v.elem[i];
 }
 
-void Vector::rsize()
+template <class X>
+void Vector<X>::rsize()
 {
-    int *vec,*aux;
+    X *vec,*aux;
     try
     {
-        vec = new int[2 * maxim];
+        vec = new X[2 * maxim];
     }
     catch(std::bad_alloc &exp)
     {
         std::cout<<"Eroare in rsize."<<exp.what();
     }
     for(int i=0;i<n;i++)
-        vec[i] = cifra[i];
-    aux = cifra;
-    cifra = vec;
+        vec[i] = elem[i];
+    aux = elem;
+    elem = vec;
     vec = aux;
     maxim = 2 * maxim;
     delete []vec;
 }
 
-void Vector::adaugare(int c)
+template <class X>
+void Vector<X>::adaugare(X c)
 {
     if(n + 1 == maxim)
         (*this).rsize();
-    cifra[n] = c;
+    elem[n] = c;
     n++;
 }
 
-void Vector::stergere(int poz)
+template <class X>
+void Vector<X>::stergere(int poz)
 {
     if(poz > -1 && poz < n)
     {
         for(int i=poz;i<n-1;i++)
         {
-            cifra[i] = cifra[i + 1];
+            elem[i] = elem[i + 1];
         }
         n--;
     }
 }
 
-void Vector::Stergere(int poz1,int poz2)
+template <class X>
+void Vector<X>::Stergere(int poz1,int poz2)
 {
     if(poz2 == -1 || poz2 >= n)
         poz2 = n - 1;
@@ -93,35 +100,38 @@ void Vector::Stergere(int poz1,int poz2)
             (*this).stergere(poz1);
 }
 
-bool Vector::operator==(const Vector &v)
+template <class X>
+bool Vector<X>::operator==(const Vector<X> &v)
 {
     if(n != v.n)
         return 0;
     for(int i=0;i<n;i++)
-        if(cifra[i] != v.cifra[i])
+        if(elem[i] != v.elem[i])
             return 0;
     return 1;
 }
 
-Vector Vector::operator=(const Vector &v)
+template <class X>
+Vector<X> Vector<X>::operator=(const Vector<X> &v)
 {
-    delete []cifra;
+    delete []elem;
     n = v.n;
     maxim = v.maxim;
     try
     {
-        cifra = new int[maxim];
+        elem = new X[maxim];
     }
     catch(std::bad_alloc &exp)
     {
         std::cout<<"Eroare in operato r=."<<exp.what();
     }
     for(int i=0;i<n;i++)
-        cifra[i] = v.cifra[i];
+        elem[i] = v.elem[i];
     return *this;
 }
 
-std::istream & operator>>(std::istream &intrare,Vector &v)
+template <class X>
+std::istream & operator>>(std::istream &intrare,Vector<X> &v)
 {
     int nr;
     intrare>>nr;
@@ -134,20 +144,22 @@ std::istream & operator>>(std::istream &intrare,Vector &v)
     return intrare;
 }
 
-std::ostream & operator<<(std::ostream &iesire,const Vector &v)
+template <class X>
+std::ostream & operator<<(std::ostream &iesire,const Vector<X> &v)
 {
     for(int i=0;i<v.n;i++)
-        iesire<<v.cifra[i];
+        iesire<<v.elem[i];
     return iesire;
 }
 
-void Vector::rverse()
+template <class X>
+void Vector<X>::rverse()
 {
-    int aux;
+    X aux;
     for(int i=0;i<=(n-1)/2;i++)
     {
-        aux = cifra[i];
-        cifra[i] = cifra[n-1-i];
-        cifra[n-1-i] = aux;
+        aux = elem[i];
+        elem[i] = elem[n-1-i];
+        elem[n-1-i] = aux;
     }
 }

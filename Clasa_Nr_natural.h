@@ -2,13 +2,14 @@
 #define CLASA_NR_NATURAL_H_INCLUDED
 #include <iostream>
 #include "Clasa_Vector.h"
+#include "Metode_Vector.cpp"
 
 
 class Nr_natural
 {
     protected:
     int nr_cifre;
-    Vector cif;
+    Vector<int> cif;
     public:
     Nr_natural();
     Nr_natural(const Nr_natural &);

@@ -73,7 +73,7 @@ Nr_intreg Nr_intreg::operator+(Nr_intreg &ni)
         else sum.semn = ni.semn;
         sum.Nr_natural::operator=(this->Nr_natural::operator-(ni));
     }
-    if(sum.cif.cifra[0] == 0)
+    if(sum.cif.elem[0] == 0)
         sum.semn = '+';
     return sum;
 }
@@ -106,7 +106,7 @@ Nr_intreg Nr_intreg::operator-(Nr_intreg &ni)
         dif.Nr_natural::operator=(this->Nr_natural::operator+(ni));
     }
 
-    if(dif.cif.cifra[0] == 0)
+    if(dif.cif.elem[0] == 0)
             dif.semn = '+';
     return dif;
 }

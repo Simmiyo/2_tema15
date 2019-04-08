@@ -82,8 +82,8 @@ Nr_natural Nr_natural::operator+(Nr_natural &nn)
     int k1 = nr_cifre -1, k2 = nn.nr_cifre -1;
     while(k1 > -1 && k2 > -1)
     {
-        sum.cif.adaugare((cif.cifra[k1] + nn.cif.cifra[k2] + i) % 10);
-        i = (cif.cifra[k1] + nn.cif.cifra[k2] + i) / 10;
+        sum.cif.adaugare((cif.elem[k1] + nn.cif.elem[k2] + i) % 10);
+        i = (cif.elem[k1] + nn.cif.elem[k2] + i) / 10;
         k1--;
         k2--;
     }
@@ -94,11 +94,11 @@ Nr_natural Nr_natural::operator+(Nr_natural &nn)
     }
     else
     {
-        int *p = cif.cifra;
+        int *p = cif.elem;
         if(k1 == -1)
         {
             k1 = k2;
-            p = nn.cif.cifra;
+            p = nn.cif.elem;
         }
         while(k1 > -1)
         {
@@ -123,9 +123,9 @@ bool Nr_natural::operator>=(const Nr_natural &nn)
          else
          {
             for(int i=0;i<nr_cifre;i++)
-                if(cif.cifra[i] < nn.cif.cifra[i])
+                if(cif.elem[i] < nn.cif.elem[i])
                     return 0;
-                else if(cif.cifra[i] > nn.cif.cifra[i])
+                else if(cif.elem[i] > nn.cif.elem[i])
                         return 1;
          }
     return 1;
@@ -153,8 +153,8 @@ Nr_natural Nr_natural::operator-(Nr_natural &nn)
     }
     while(k2 > -1)
     {
-        dif.cif.adaugare((10 + mare->cif.cifra[k1] - mic->cif.cifra[k2] - i) % 10);
-        if(mare->cif.cifra[k1] >= mic->cif.cifra[k2])
+        dif.cif.adaugare((10 + mare->cif.elem[k1] - mic->cif.elem[k2] - i) % 10);
+        if(mare->cif.elem[k1] >= mic->cif.elem[k2])
             i = 0;
         else i = 1;
         k1--;
@@ -162,13 +162,13 @@ Nr_natural Nr_natural::operator-(Nr_natural &nn)
     }
     while(k1 > -1)
     {
-        dif.cif.adaugare((10 +mare->cif.cifra[k1] - i) % 10);
-        if(mare->cif.cifra[k1] - i < 0)
+        dif.cif.adaugare((10 +mare->cif.elem[k1] - i) % 10);
+        if(mare->cif.elem[k1] - i < 0)
             i = 1;
         else i = 0;
         k1--;
     }
-    while(dif.cif.cifra[dif.cif.n-1] == 0 && dif.cif.n > 1)
+    while(dif.cif.elem[dif.cif.n-1] == 0 && dif.cif.n > 1)
         dif.cif.stergere(dif.cif.n - 1);
     dif.cif.rverse();
     dif.nr_cifre = dif.cif.n;
@@ -201,8 +201,8 @@ Nr_natural Nr_natural::operator*(Nr_natural &nn)
         i = 0;
         for(j=k1;j>=0;j--)
         {
-            termen.cif.adaugare((mic->cif.cifra[k] * mare->cif.cifra[j] + i) % 10);
-            i = (mic->cif.cifra[k] * mare->cif.cifra[j] + i) / 10;
+            termen.cif.adaugare((mic->cif.elem[k] * mare->cif.elem[j] + i) % 10);
+            i = (mic->cif.elem[k] * mare->cif.elem[j] + i) / 10;
         }
         if(i != 0)
             termen.cif.adaugare(i);
@@ -215,7 +215,7 @@ Nr_natural Nr_natural::operator*(Nr_natural &nn)
         prod.nr_cifre = prod.cif.n;
         termen.cif.Stergere();
     }
-    while(prod.cif.cifra[0] == 0 && prod.cif.n > 1)
+    while(prod.cif.elem[0] == 0 && prod.cif.n > 1)
         prod.cif.stergere(0);
     return prod;
 }
